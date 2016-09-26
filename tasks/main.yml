@@ -1,0 +1,33 @@
+---
+
+- name: install key
+  apt_key:
+    keyserver: "{{ docker_apt_key_server }}"
+    id: "{{ docker_apt_key_id }}"
+    state: present
+  register: gpg_key_installed
+
+- name: add repo
+  apt_repository:
+    repo: "{{ docker_apt_repo }}"
+    state: present
+    update_cache: yes
+  when: gpg_key_installed|success
+  register: docker_repo_installed
+
+- name: install apt packages
+  apt:
+    name: "{{ item }}"
+    state:              latest
+    install_recommends: false
+    update_cache:       yes
+    cache_valid_time:   300
+  with_items: "{{ docker_packages }}"
+  when: docker_repo_installed|success
+
+- name: service start
+  service:
+    name:  "{{ item }}"
+    state: started
+  with_items:
+    - docker
