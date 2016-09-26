@@ -16,6 +16,5 @@ galaxy_info:
       - jessie
   galaxy_tags:
     - docker
-    - docker-engine
     - container
 dependencies: []
