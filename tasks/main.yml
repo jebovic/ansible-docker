@@ -1,5 +1,14 @@
 ---
 
+- name: install dependencies apt packages
+  apt:
+    name: "{{ item }}"
+    state:              latest
+    install_recommends: false
+    update_cache:       yes
+    cache_valid_time:   300
+  with_items: "{{ docker_dep_packages }}"
+
 - name: install key
   apt_key:
     keyserver: "{{ docker_apt_key_server }}"
