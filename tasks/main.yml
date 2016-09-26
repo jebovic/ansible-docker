@@ -40,3 +40,12 @@
     state: started
   with_items:
     - docker
+
+- name: install docker-composer
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_install_path }}"
+    owner: root
+    group: root
+    mode: 0744
+  when: docker_compose_enabled
