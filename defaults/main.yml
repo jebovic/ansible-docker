@@ -14,3 +14,5 @@ docker_packages:
 docker_compose_enabled: yes
 docker_compose_url: "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-Linux-x86_64"
 docker_compose_install_path: /usr/local/bin/docker-compose
+docker_newrelic_support_enabled: yes
+docker_test_mode: no

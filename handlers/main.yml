@@ -6,3 +6,9 @@
     state: restarted
   with_items:
     - docker
+
+- name: restart newrelic-agent
+  service:
+    name: newrelic-sysmond
+    state: restarted
+  when: not docker_test_mode

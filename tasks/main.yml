@@ -34,12 +34,10 @@
   with_items: "{{ docker_packages }}"
   when: docker_repo_installed|success
 
-- name: service start
-  service:
-    name:  "{{ item }}"
-    state: started
-  with_items:
-    - docker
+- name: add docker user_group
+  group:
+    name: docker
+    state: present
 
 - name: install docker-compose
   get_url:
@@ -49,3 +47,19 @@
     group: root
     mode: 0744
   when: docker_compose_enabled
+
+- name: add newrelic user in docker group
+  user:
+    name: newrelic
+    groups: docker
+  notify:
+    - restart docker
+    - restart newrelic-agent
+  when: docker_newrelic_support_enabled
+
+- name: service start
+  service:
+    name:  "{{ item }}"
+    state: started
+  with_items:
+    - docker
