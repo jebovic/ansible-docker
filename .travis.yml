@@ -13,7 +13,8 @@ before_install:
 script:
   # run container
   - container_id=$(mktemp)
-  - docker run --detach --privileged --volume=/var/lib/docker:/var/lib/docker --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} jebovic/${distro}-ansible:latest "${init}" > "${container_id}"
+  - lib_docker=$(mktemp -d)
+  - docker run --detach --privileged --volume="${lib_docker}":/var/lib/docker --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} jebovic/${distro}-ansible:latest "${init}" > "${container_id}"
   # syntax checking
   - docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check
   # test role
