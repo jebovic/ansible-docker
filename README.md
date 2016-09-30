@@ -1,6 +1,8 @@
 Docker
 ======
 
+[![Build Status](https://travis-ci.org/jebovic/ansible-docker.svg?branch=master)](https://travis-ci.org/jebovic/ansible-docker)
+
 Install and configure docker
 
 Role Variables
