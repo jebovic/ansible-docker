@@ -1,7 +1,7 @@
 Docker
 ======
 
-[![Build Status](https://travis-ci.org/jebovic/ansible-docker.svg?branch=master)](https://travis-ci.org/jebovic/ansible-docker)
+[![Build Status](https://travis-ci.org/jebovic/ansible-docker.svg?branch=master)](https://travis-ci.org/jebovic/ansible-docker) [![Ansible Galaxy](https://img.shields.io/badge/galaxy-jebovic.docker-blue.svg?style=flat)](https://galaxy.ansible.com/jebovic/docker)
 
 Install and configure docker
 
