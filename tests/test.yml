@@ -4,5 +4,4 @@
   roles:
     - role_under_test
   vars:
-    docker_newrelic_support_enabled: yes
     docker_test_mode: yes
