@@ -8,7 +8,7 @@ Install and configure docker
 Role Variables
 --------------
 
-```
+```yaml
 # Docker install configuration
 docker_apt_key_server: hkp://p80.pool.sks-keyservers.net:80
 docker_apt_key_id: 58118E89F3A912897C070ADBF76221572C52609D
@@ -23,10 +23,10 @@ docker_packages:
 Example Playbook
 ----------------
 
-```
-    - hosts: servers
-      roles:
-         - { role: jebovic.docker }
+```yaml
+- hosts: servers
+  roles:
+     - { role: jebovic.docker }
 ```
 
 License
