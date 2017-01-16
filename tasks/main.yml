@@ -3,10 +3,10 @@
 - name: install dependencies apt packages
   apt:
     name: "{{ item }}"
-    state:              latest
-    install_recommends: false
-    update_cache:       yes
-    cache_valid_time:   300
+    state: latest
+    install_recommends: no
+    update_cache: yes
+    cache_valid_time: 86400
   with_items: "{{ docker_dep_packages }}"
 
 - name: install key
@@ -14,23 +14,28 @@
     keyserver: "{{ docker_apt_key_server }}"
     id: "{{ docker_apt_key_id }}"
     state: present
-  register: gpg_key_installed
+  register: docker_key_installed
 
 - name: add repo
   apt_repository:
     repo: "{{ docker_apt_repo }}"
     state: present
-    update_cache: yes
-  when: gpg_key_installed|success
+    update_cache: no
+  when: docker_key_installed|success
   register: docker_repo_installed
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+  when: docker_repo_installed|changed
 
 - name: install apt packages
   apt:
     name: "{{ item }}"
-    state:              latest
-    install_recommends: false
+    state: latest
+    install_recommends: no
     update_cache:       yes
-    cache_valid_time:   300
+    cache_valid_time:   86400
   with_items: "{{ docker_packages }}"
   when: docker_repo_installed|success
 
@@ -59,7 +64,7 @@
 
 - name: service start
   service:
-    name:  "{{ item }}"
+    name: "{{ item }}"
     state: started
     enabled: yes
   with_items:
