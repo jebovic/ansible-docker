@@ -34,8 +34,8 @@
     name: "{{ item }}"
     state: latest
     install_recommends: no
-    update_cache:       yes
-    cache_valid_time:   86400
+    update_cache: yes
+    cache_valid_time: 86400
   with_items: "{{ docker_packages }}"
   when: docker_repo_installed|success
 
