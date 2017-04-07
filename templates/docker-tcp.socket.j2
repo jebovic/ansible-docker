@@ -1,0 +1,8 @@
+[Unit]
+Description=Docker Socket for the API
+[Socket]
+ListenStream={{ docker_remote_api_port }}
+BindIPv6Only=both
+Service=docker.service
+[Install]
+WantedBy=sockets.target

@@ -44,6 +44,24 @@
     name: docker
     state: present
 
+- name: systemd config
+  template:
+    src: docker-tcp.socket.j2
+    dest: /lib/systemd/system/docker-tcp.socket
+  notify:
+    - restart docker tcp
+  tags: docker_config
+  when: docker_remote_api_enabled
+
+- name: daemon config
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  with_items: "{{ docker_daemon_config }}"
+  notify:
+    - restart docker
+  tags: docker_config
+
 - name: install docker-compose
   get_url:
     url: "{{ docker_compose_url }}"
@@ -61,6 +79,14 @@
     - restart docker
     - restart newrelic-agent
   when: docker_newrelic_support_enabled
+
+- name: tcp socket start
+  systemd:
+    name: docker-tcp.socket
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  when: docker_remote_api_enabled
 
 - name: service start
   service:

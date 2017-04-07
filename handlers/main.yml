@@ -12,3 +12,9 @@
     name: newrelic-sysmond
     state: restarted
   when: not docker_test_mode
+
+- name: restart docker tcp
+  systemd:
+    name: docker-tcp.socket
+    state: restarted
+    daemon_reload: yes
